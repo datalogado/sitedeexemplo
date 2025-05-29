@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Protocolos de Rede</title>
+  <style>
+    :root {
+      --bg-color: #f7f7f7;
+      --text-color: #333;
+      --header-bg: #004080;
+      --section-bg: #fff;
+      --accent-color: #0066cc;
+    }
+    body.dark {
+      --bg-color: #1e1e1e;
+      --text-color: #ddd;
+      --header-bg: #00244a;
+      --section-bg: #2a2a2a;
+      --accent-color: #3399ff;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    header {
+      background-color: var(--header-bg);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    header .theme-toggle {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      background: var(--section-bg);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-color);
+    }
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .accordion {
+      background-color: var(--section-bg);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .accordion-header {
+      padding: 15px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .accordion-header:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    .accordion-header h2 {
+      font-size: 1.2rem;
+      color: var(--accent-color);
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 15px;
+    }
+    .accordion-content p {
+      padding: 15px 0;
+    }
+    .accordion-header .icon {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+    .accordion-header.active .icon {
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Protocolos de Rede</h1>
+    <button class="theme-toggle" id="themeToggle">Modo Escuro</button>
+  </header>
+  <main>
+    <!-- HTTP -->
+    <div class="accordion">
+      <div class="accordion-header" data-target="http">
+        <h2>HTTP</h2><span class="icon">+</span>
+      </div>
+      <div class="accordion-content" id="http">
+        <p>O <strong>HTTP</strong> (HyperText Transfer Protocol) é o protocolo principal para transferência de páginas web entre clientes (navegadores) e servidores. Sua versão segura, <em>HTTPS</em>, utiliza TLS/SSL para criptografar a comunicação.</p>
+      </div>
+    </div>
+    <!-- SMTP -->
+    <div class="accordion">
+      <div class="accordion-header" data-target="smtp">
+        <h2>SMTP</h2><span class="icon">+</span>
+      </div>
+      <div class="accordion-content" id="smtp">
+        <p>O <strong>SMTP</strong> (Simple Mail Transfer Protocol) é responsável pelo envio de e-mails entre clientes e servidores de correio e também entre servidores de e-mail.</p>
+      </div>
+    </div>
+    <!-- IMAP -->
+    <div class="accordion">
+      <div class="accordion-header" data-target="imap">
+        <h2>IMAP</h2><span class="icon">+</span>
+      </div>
+      <div class="accordion-content" id="imap">
+        <p>O <strong>IMAP</strong> (Internet Message Access Protocol) permite acessar e gerenciar e-mails diretamente no servidor, mantendo a sincronização entre múltiplos dispositivos.</p>
+      </div>
+    </div>
+    <!-- DNS -->
+    <div class="accordion">
+      <div class="accordion-header" data-target="dns">
+        <h2>DNS</h2><span class="icon">+</span>
+      </div>
+      <div class="accordion-content" id="dns">
+        <p>O <strong>DNS</strong> (Domain Name System) traduz nomes de domínio legíveis (como www.exemplo.com) em endereços IP, permitindo a localização de servidores na Internet.</p>
+      </div>
+    </div>
+    <!-- IP -->
+    <div class="accordion">
+      <div class="accordion-header" data-target="ip">
+        <h2>IP</h2><span class="icon">+</span>
+      </div>
+      <div class="accordion-content" id="ip">
+        <p>O <strong>IP</strong> (Internet Protocol) gerencia o endereçamento e roteamento de pacotes de dados na rede. Cada dispositivo possui um endereço IP único (IPv4 ou IPv6).</p>
+      </div>
+    </div>
+    <!-- P2P -->
+    <div class="accordion">
+      <div class="accordion-header" data-target="p2p">
+        <h2>P2P</h2><span class="icon">+</span>
+      </div>
+      <div class="accordion-content" id="p2p">
+        <p>O modelo <strong>Peer-to-Peer (P2P)</strong> permite comunicação direta entre dispositivos sem servidor central. Muito usado em redes de compartilhamento, como BitTorrent.</p>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Accordion
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const targetId = header.getAttribute('data-target');
+        const content = document.getElementById(targetId);
+        const isOpen = header.classList.contains('active');
+        // Close all
+        document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('active'));
+        document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+        // Toggle current
+        if (!isOpen) {
+          header.classList.add('active');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      themeToggle.textContent = document.body.classList.contains('dark') ? 'Modo Claro' : 'Modo Escuro';
+    });
+  </script>
+</body>
+</html>
